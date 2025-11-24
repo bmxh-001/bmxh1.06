@@ -1,0 +1,88 @@
+/* 优化布局样式 - 2024版 */
+
+/* 主容器优化 */
+.app-container {
+    max-width: 100% !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+}
+
+/* 页面头部优化 */
+.app-header {
+    background-color: #2d3748 !important;
+    padding: 4px 15px !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 内容区域布局调整 */
+.main-content {
+    height: calc(100vh - 35px) !important;
+}
+
+/* 侧边栏宽度优化 */
+.sidebar {
+    width: 180px !important;
+    flex-shrink: 0;
+}
+
+/* 内容区域优化 */
+.content-area {
+    flex-grow: 1;
+    flex-basis: 0;
+    min-width: 0;
+    padding: 10px 15px !important;
+    overflow-y: auto;
+}
+
+/* 小说内容编辑区优化 */
+#novel-content {
+    font-size: 1.05em !important;
+    line-height: 1.7 !important;
+    padding: 15px !important;
+    font-family: 'Noto Serif SC', serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto !important;
+    flex: 1 1 auto !important;
+}
+
+/* 元数据区域优化为更紧凑的布局 */
+.metadata-inputs {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 5px !important;
+}
+
+.metadata-group {
+    flex: 1;
+    min-width: 180px !important;
+}
+
+/* 控制区布局优化 */
+.control-group {
+    padding: 5px 8px !important;
+    min-width: auto !important;
+    flex: 0 1 auto !important;
+    margin-right: 5px !important;
+}
+
+/* 确保手机版布局也优化 */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100% !important;
+        max-height: 200px !important;
+    }
+    
+    #novel-content {
+        padding: 10px !important;
+    }
+}
+
+/* 大屏幕优化 */
+@media (min-width: 1400px) {
+    .sidebar {
+        width: 200px !important;
+    }
+    
+    .content-area {
+        padding: 15px 20px !important;
+    }
+} 

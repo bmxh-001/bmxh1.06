@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>笔墨星河</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/layout.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/novel-types.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/toolbar-enhancements.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/right-sidebar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chapter-manager.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Consider adding a CSS framework like Bootstrap or Tailwind later for faster styling -->
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>笔墨星河 v1.06</h1>
+            <div class="scrolling-notice">
+                <marquee behavior="scroll" direction="left" scrollamount="3">小技巧：使用过程遇到BUG时，刷新浏览器会解决大部分问题。遇到失败提示，更换模型试试。</marquee>
+            </div>
+            <div class="model-settings-container">
+                <div class="controls">
+                    <div class="control-group model-controls">
+                        <div class="control-label">模型</div>
+                        <div class="control-item">
+                            <select id="model-select" name="model">
+                                <option value="">加载模型...</option>
+                            </select>
+                            <button id="custom-api-btn" class="btn-small"><i class="fas fa-cog"></i> 自定义API</button>
+                        </div>
+                        <div class="control-item">
+                            <input type="text" id="api-key-input" name="api-key" placeholder="输入OpenRouter API密钥..." />
+                            <button id="save-api-key-btn" class="btn-small">保存</button>
+                        </div>
+                        <div class="control-item">
+                            <label for="temperature-slider">温:</label>
+                            <input type="range" id="temperature-slider" name="temperature" min="0" max="2" step="0.1" value="0.7">
+                            <span id="temperature-value">0.7</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="api-status-container">
+                <span class="api-info">API:<code id="api-address">自定义API</code></span>
+                <span id="status-indicator" class="status">已连接</span>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <aside class="sidebar">
+                <section class="sidebar-section">
+                    <h2><i class="fas fa-book icon-book"></i> 小说作品</h2>
+                    <ul id="novel-list">
+                        <li>正在加载小说列表...</li>
+                    </ul>
+                    <div class="sidebar-buttons">
+                        <button id="new-novel-btn" class="btn btn-create"><i class="fas fa-plus"></i> 创建新小说</button>
+                        <button id="import-novel-btn" class="btn btn-import"><i class="fas fa-file-import"></i> 导入小说</button>
+                        <button id="prompt-editor-btn" class="btn btn-editor"><i class="fas fa-edit"></i> 提示词编辑器</button>
+                        <button id="rewrite-novel-btn" class="btn btn-create"><i class="fas fa-sync-alt"></i> AIGC降重</button>
+                        <button id="character-graph-btn" class="btn btn-create"><i class="fas fa-project-diagram"></i> 角色关系图谱</button>
+                    </div>
+                    <!-- Hidden file input for import -->
+                    <input type="file" id="import-file-input" accept=".txt,.json,.docx" style="display: none;">
+                </section>
+
+                <section class="sidebar-section">
+                    <h2><i class="fas fa-gamepad icon-game"></i> 互动体验</h2>
+                    <ul>
+                        <li><button id="text-game-btn" class="tool-btn" data-tool="text-game"><i class="fas fa-gamepad"></i> 文字游戏</button></li>
+                    </ul>
+                </section>
+
+                <section class="sidebar-section">
+                    <h2><i class="fas fa-toolbox icon-tools"></i> 工具箱</h2>
+                    <ul>
+                        <li><button class="tool-btn" data-tool="synopsis"><i class="fas fa-file-alt icon-synopsis"></i> 简介生成器</button></li>
+                        <li><button class="tool-btn" data-tool="title"><i class="fas fa-heading icon-title"></i> 书名生成器</button></li>
+                        <li><button class="tool-btn" data-tool="outline"><i class="fas fa-list-ul icon-outline"></i> 大纲生成器</button></li>
+                        <li><button class="tool-btn" data-tool="detailed-outline"><i class="fas fa-tasks icon-detailed-outline"></i> 细纲生成器</button></li>
+                        <li><button class="tool-btn" data-tool="character"><i class="fas fa-user"></i> 人物卡生成</button></li>
+                        <!-- Add more tools later -->
+                    </ul>
+                </section>
+
+                 <section class="sidebar-section">
+                     <h2><i class="fas fa-users icon-characters"></i> 角色库</h2>
+                     <ul id="character-list">
+                         <li>正在加载角色库...</li>
+                     </ul>
+                     <button id="open-character-library-btn" class="btn btn-secondary"><i class="fas fa-book-open"></i> 打开角色库</button>
+                 </section>
+                 
+                 <section class="sidebar-section">
+                     <h2><i class="fas fa-book icon-glossary"></i> 词条库</h2>
+                     <ul id="glossary-list">
+                         <li>正在加载词条库...</li>
+                     </ul>
+                     <button id="open-glossary-btn" class="btn btn-secondary"><i class="fas fa-book-open"></i> 打开词条库</button>
+                 </section>
+
+                 <section class="sidebar-section">
+                     <h2><i class="fas fa-paint-brush icon-style"></i> 风格库</h2>
+                     <ul id="style-list">
+                         <li>正在加载风格库...</li>
+                     </ul>
+                     <button id="open-style-library-btn" class="btn btn-secondary"><i class="fas fa-book-open"></i> 打开风格库</button>
+                 </section>
+
+                 <section class="sidebar-section advanced-tools">
+                     <h2><i class="fas fa-wrench icon-advanced"></i> 未开放</h2>
+                     <ul>
+                     </ul>
+                 </section>
+
+            </aside>
+
+            <section class="content-area">
+                <!-- Welcome Screen (Visible initially) -->
+                <div id="welcome-screen" class="view">
+                    <div class="welcome-content">
+                        <h2></h2>
+                        <div class="welcome-info">
+                            <div class="info-section">
+                                <h3><i class="fas fa-book"></i> 开始创作</h3>
+                                <p>请从左侧选择一部小说继续写作，或创建一部新小说。您也可以导入已有的小说文件。</p>
+                                <div class="welcome-actions">
+                                    <button id="welcome-new-novel-btn" class="btn btn-create"><i class="fas fa-plus"></i> 创建新小说</button>
+                                    <button id="welcome-import-btn" class="btn btn-import"><i class="fas fa-file-import"></i> 导入小说</button>
+                                </div>
+                            </div>
+                            
+                            <div class="info-section">
+                                <h3><i class="fas fa-tools"></i> 更新说明</h3>
+                                <p>本软件免费！v1.06：新增角色关系和知识图谱，增加批量导出导入章节。修复页面重叠。v1.05：自定义提示词，提示词编辑器，简介生成器，提示词模板，API配置示例。感谢大家的支持！</p>
+                                <div class="tool-card-container">
+                                    <ul class="welcome-tools">
+                                        <li><button class="tool-btn" data-tool="synopsis"><i class="fas fa-file-alt icon-synopsis"></i> 简介生成器</button></li>
+                                        <li><button class="tool-btn" data-tool="title"><i class="fas fa-heading icon-title"></i> 书名生成器</button></li>
+                                        <li><button class="tool-btn" data-tool="outline"><i class="fas fa-list-ul icon-outline"></i> 大纲生成器</button></li>
+                                        <li><button class="tool-btn" data-tool="detailed-outline"><i class="fas fa-tasks icon-detailed-outline"></i> 细纲生成器</button></li>
+                                        <li><button class="tool-btn" data-tool="character"><i class="fas fa-user"></i> 人物卡生成</button></li>
+                                    </ul>
+                                </div>
+                                  <p>请合法合规使用本软件，勿用作非法用途。   作者：L.H</p>
+                            </div>
+                            
+                            <div class="info-section">
+                                <h3><i class="fas fa-server"></i> 连接状态</h3>
+                                <p>使用自定义API或OpenRouter服务进行模型调用。</p>
+                                <div id="welcome-status" class="welcome-status">API 可用</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Novel Writing Area (Hidden initially) -->
+                <div id="writing-area" class="view hidden">
+                    <div class="writing-title-bar">
+                        <h2 id="writing-novel-title">小说标题</h2>
+                        <span id="word-count-display" class="word-count">字数: 0</span>
+                    </div>
+                    <div class="collapsible-toggle-bar">
+                        <button id="toggle-writing-settings-btn" class="btn-icon" title="折叠/展开设定">
+                            <i class="fas fa-chevron-up"></i>
+                        </button>
+                    </div>
+                    <div id="collapsible-writing-settings" class="collapsible-content">
+                        <div class="writing-toolbar">
+                            <button id="save-novel-btn" title="保存小说"><i class="fas fa-save icon-save"></i> 保存当前内容</button>
+                            <button id="export-txt-btn" title="导出为 TXT"><i class="fas fa-file-alt"></i>导出为 TXT</button>
+                            <button id="export-json-btn" title="导出为 JSON"><i class="fas fa-file-code"></i> 导出为 JSON</button>
+                            <button id="export-docx-btn" title="导出为 DOCX"><i class="fas fa-file-word"></i>导出为 DOCX</button>
+                            <button id="save-to-glossary-btn" title="存入词条"><i class="fas fa-book"></i> 存入词条</button>
+                        </div>
+                        <div class="metadata-inputs">
+                            <div class="metadata-group">
+                                <label for="characters-input"><i class="fas fa-users"></i> 角色设定:</label>
+                                <div class="character-input-container">
+                                    <div id="character-tags-container" class="character-tags-container"></div>
+                                    <textarea id="characters-input" placeholder="输入主要角色及其设定..."></textarea>
+                                </div>
+                            </div>
+                            <div class="metadata-group">
+                                <label for="knowledge-input"><i class="fas fa-brain"></i> 关联知识:</label>
+                                <div class="knowledge-input-container">
+                                    <div id="glossary-tags-container" class="tags-container"></div>
+                                    <textarea id="knowledge-input" placeholder="输入相关的背景知识、世界观设定或参考资料..."></textarea>
+                                </div>
+                            </div>
+                            <div class="metadata-group">
+                                <label for="style-prompt-input"><i class="fas fa-paint-brush"></i> 风格提示:</label>
+                                <div class="style-input-container">
+                                    <div id="style-tags-container" class="tags-container"></div>
+                                    <textarea id="style-prompt-input" placeholder="输入希望模型遵循的写作风格、语气或特定提示..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="novel-content-wrapper">
+                        <div id="original-content-wrapper" class="content-wrapper">
+                            <textarea id="novel-content" placeholder="开始你的小说创作..."></textarea>
+                        </div>
+                        <div id="inspiration-content-wrapper" class="content-wrapper hidden">
+                            <div class="inspiration-panel">
+                                <div class="original-text-panel">
+                                    <h3>原文</h3>
+                                    <textarea id="original-text" readonly></textarea>
+                                </div>
+                                <div class="imitation-text-panel">
+                                    <h3>仿写生成</h3>
+                                    <textarea id="imitation-text" readonly></textarea>
+                                    <button id="start-imitation-btn" class="btn btn-action"><i class="fas fa-magic"></i> 开始仿写</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="generation-controls">
+                        <textarea id="prompt-input" placeholder="在此输入您的写作提示（例如：\'描述角色进入酒馆\'，\'续写当前故事\'）"></textarea>
+                        <div class="generation-buttons-wrapper">
+                            <div class="generation-buttons">
+                                <button id="generate-btn" class="btn btn-action"><i class="fas fa-magic"></i> 生成文本</button>
+                                <button id="continue-btn" class="btn btn-secondary"><i class="fas fa-pen-fancy"></i> 继续写作</button>
+                                <button id="split-novel-btn" class="btn btn-secondary"><i class="fas fa-file-alt"></i> 拆分文章</button>
+                                <button id="inspiration-btn" class="btn btn-secondary"><i class="fas fa-lightbulb"></i> 仿写生成</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="generated-output" class="output-area hidden">
+                        <!-- Empty but kept for compatibility with existing JavaScript code -->
+                    </div>
+                </div>
+
+                 <!-- Toolbox Area (Hidden initially) -->
+                 <div id="toolbox-area" class="view hidden">
+                    <h2 id="toolbox-title">工具箱</h2>
+                    <div class="toolbox-controls">
+                        <textarea id="toolbox-prompt" rows="5" placeholder="输入内容或关键词..."></textarea>
+                        
+                        <!-- Novel Type Selection Area -->
+                        <div id="novel-types-section" class="novel-types-container">
+                            <div class="novel-types-title"><i class="fas fa-book"></i> 生成类型选择-可自由组合类型，可多选</div>
+                            <div class="novel-types-options" id="novel-main-types">
+                                <!-- Main types will be populated via JavaScript -->
+                            </div>
+                            <div id="novel-subtypes-container" class="novel-subtypes-container">
+                                <div class="novel-subtype-options" id="novel-subtypes">
+                                    <!-- Subtypes will be populated via JavaScript -->
+                                </div>
+                            </div>
+                            <div class="selected-types-summary" id="selected-types-summary">
+                                未选择任何类型
+                            </div>
+                        </div>
+                        
+                        <button id="toolbox-generate-btn" class="btn btn-action" data-tool-type=""><i class="fas fa-cogs"></i> 生成</button>
+                        <button id="toolbox-return-btn" class="btn btn-action"><i class="fas fa-arrow-left"></i> 返回</button>
+                        <button id="add-detailed-outline-to-novel-btn" class="btn btn-action"><i class="fas fa-paper-plane"></i> 添加到小说</button>
+                    </div>
+                    <div id="toolbox-output" class="output-area hidden">
+                        <h3>工具输出:</h3>
+                        <pre><code id="toolbox-output-text"></code></pre>
+                        <div class="output-actions">
+                             <button id="copy-toolbox-output-btn" title="复制输出"><i class="fas fa-copy icon-copy"></i> 复制输出</button>
+                             <!-- Add button for character generation tool -->
+                             <button id="save-character-btn" title="保存到角色库" class="hidden"><i class="fas fa-save"></i> 保存到角色库</button>
+                             <!-- Add button for synopsis to outline -->
+                             <button id="add-to-outline-btn" title="添加到大纲" class="hidden"><i class="fas fa-list-ul"></i> 添加到大纲</button>
+                         </div>
+                    </div>
+                </div>
+                
+                <!-- Character Library Area (Hidden initially) -->
+                <div id="character-library-area" class="view hidden library-area">
+                    <h2>角色库</h2>
+                    <div class="library-actions">
+                        <button id="new-character-btn" class="btn btn-primary"><i class="fas fa-plus"></i> 新建角色</button>
+                    </div>
+                    <div class="library-content">
+                        <div class="list-panel">
+                            <h3>角色列表</h3>
+                            <ul id="character-library-list" class="library-list">
+                                <li>正在加载角色...</li>
+                            </ul>
+                        </div>
+                        <div class="detail-panel">
+                            <div id="character-view-panel">
+                                <h3>角色详情</h3>
+                                <div id="character-detail" class="detail-content">
+                                    <p class="select-prompt">请从左侧选择一个角色，或创建新角色。</p>
+                                </div>
+                                <div class="detail-actions">
+                                    <button id="edit-character-btn" class="btn btn-secondary hidden"><i class="fas fa-edit"></i> 编辑角色</button>
+                                    <button id="add-to-novel-btn" class="btn btn-primary hidden"><i class="fas fa-plus"></i> 添加到当前小说</button>
+                                    <button id="delete-character-btn" class="btn btn-danger hidden"><i class="fas fa-trash"></i> 删除角色</button>
+                                </div>
+                            </div>
+                            <div id="character-edit-panel" class="edit-panel hidden">
+                                <h3 id="character-edit-title">创建新角色</h3>
+                                <form id="character-form" class="form-content">
+                                    <div class="form-group">
+                                        <label for="character-name-input">角色名称 <span class="required">*</span></label>
+                                        <input type="text" id="character-name-input" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="character-description-input">角色描述 <span class="required">*</span></label>
+                                        <textarea id="character-description-input" rows="10" required placeholder="详细描述该角色的性格、背景、外貌等..."></textarea>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="button" id="character-cancel-btn" class="btn btn-secondary"><i class="fas fa-times"></i> 取消</button>
+                                        <button type="submit" id="character-save-btn" class="btn btn-primary"><i class="fas fa-save"></i> 保存</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Glossary Library Area (Hidden initially) -->
+                <div id="glossary-area" class="view hidden library-area">
+                    <h2>词条库</h2>
+                    <div class="library-actions">
+                        <button id="new-glossary-entry-btn" class="btn btn-primary"><i class="fas fa-plus"></i> 新建词条</button>
+                        <select id="glossary-category-filter" class="filter-select">
+                            <option value="">所有分类</option>
+                        </select>
+                        <button id="import-glossary-btn" class="btn btn-primary"><i class="fas fa-file-import"></i> 导入词条</button>
+                    </div>
+                    <div class="library-content">
+                        <div class="list-panel">
+                            <h3>词条列表</h3>
+                            <ul id="glossary-library-list" class="library-list">
+                                <li>正在加载词条...</li>
+                            </ul>
+                        </div>
+                        <div class="detail-panel">
+                            <div id="glossary-view-panel">
+                                <h3>词条详情</h3>
+                                <div id="glossary-detail" class="detail-content">
+                                    <p class="select-prompt">请从左侧选择一个词条，或创建新词条。</p>
+                                </div>
+                                <div class="detail-actions">
+                                    <button id="edit-glossary-btn" class="btn btn-secondary hidden"><i class="fas fa-edit"></i> 编辑词条</button>
+                                    <button id="add-glossary-to-novel-btn" class="btn btn-primary hidden"><i class="fas fa-plus"></i> 添加到当前小说</button>
+                                    <button id="delete-glossary-btn" class="btn btn-danger hidden"><i class="fas fa-trash"></i> 删除词条</button>
+                                </div>
+                            </div>
+                            <div id="glossary-edit-panel" class="edit-panel hidden">
+                                <h3 id="glossary-edit-title">创建新词条</h3>
+                                <form id="glossary-form" class="form-content">
+                                    <div class="form-group">
+                                        <label for="glossary-term-input">词条名称 <span class="required">*</span></label>
+                                        <input type="text" id="glossary-term-input" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="glossary-category-input">分类</label>
+                                        <input type="text" id="glossary-category-input" placeholder="例如: A地点, 术语, 物品, 历史等">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="glossary-description-input">词条内容 <span class="required">*</span></label>
+                                        <textarea id="glossary-description-input" rows="10" required placeholder="详细描述该词条..."></textarea>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="button" id="glossary-cancel-btn" class="btn btn-secondary"><i class="fas fa-times"></i> 取消</button>
+                                        <button type="submit" id="glossary-save-btn" class="btn btn-primary"><i class="fas fa-save"></i> 保存</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Style Library Area (Hidden initially) -->
+                <div id="style-area" class="view hidden library-area">
+                    <h2>风格库</h2>
+                    <div class="library-actions">
+                        <button id="new-style-btn" class="btn btn-primary"><i class="fas fa-plus"></i> 新建风格</button>
+                        <select id="style-category-filter" class="filter-select">
+                            <option value="">所有分类</option>
+                        </select>
+                        <button id="import-md-style-btn" class="btn btn-primary"><i class="fas fa-file-import"></i> 导入词条</button>
+                    </div>
+                    <div class="library-content">
+                        <div class="list-panel">
+                            <h3>风格列表</h3>
+                            <ul id="style-library-list" class="library-list">
+                                <li>正在加载风格...</li>
+                            </ul>
+                        </div>
+                        <div class="detail-panel">
+                            <div id="style-view-panel">
+                                <h3>风格详情</h3>
+                                <div id="style-detail" class="detail-content">
+                                    <p class="select-prompt">请从左侧选择一个风格，或创建新风格。</p>
+                                </div>
+                                <div class="detail-actions">
+                                    <button id="edit-style-btn" class="btn btn-secondary hidden"><i class="fas fa-edit"></i> 编辑风格</button>
+                                    <button id="add-style-to-novel-btn" class="btn btn-primary hidden"><i class="fas fa-plus"></i> 添加到当前小说</button>
+                                    <button id="delete-style-btn" class="btn btn-danger hidden"><i class="fas fa-trash"></i> 删除风格</button>
+                                </div>
+                            </div>
+                            <div id="style-edit-panel" class="edit-panel hidden">
+                                <h3 id="style-edit-title">创建新风格</h3>
+                                <form id="style-form" class="form-content">
+                                    <div class="form-group">
+                                        <label for="style-name-input">风格名称 <span class="required">*</span></label>
+                                        <input type="text" id="style-name-input" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="style-category-input">分类</label>
+                                        <input type="text" id="style-category-input" placeholder="例如: 风格派别, 文风, 语气, 特定作者风格等">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="style-content-input">风格内容 <span class="required">*</span></label>
+                                        <textarea id="style-content-input" rows="10" required placeholder="描述这个风格的具体指令，例如：'文字风格要优美流畅，使用多种修辞手法...'"></textarea>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="button" id="style-cancel-btn" class="btn btn-secondary"><i class="fas fa-times"></i> 取消</button>
+                                        <button type="submit" id="style-save-btn" class="btn btn-primary"><i class="fas fa-save"></i> 保存</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Chat Area (Hidden initially) -->
+                <div id="game-chat-area" class="view hidden">
+                    <div class="game-chat-container">
+                        <!-- Settings Panel (Collapsible) -->
+                        <div class="game-settings-panel">
+                            <div class="settings-header">
+                                <h3><i class="fas fa-cog"></i> 游戏设置</h3>
+                                <button id="toggle-settings-btn" class="btn-icon"><i class="fas fa-chevron-up"></i></button>
+                            </div>
+                            <div class="settings-content">
+                                <div class="settings-group">
+                                    <label for="character-setting"><i class="fas fa-user"></i> 角色设置</label>
+                                    <textarea id="character-setting" placeholder="描述你的角色身份、特点、能力等..."></textarea>
+                                </div>
+                                <div class="settings-group">
+                                    <label for="world-setting"><i class="fas fa-globe"></i> 世界设置</label>
+                                    <textarea id="world-setting" placeholder="描述游戏的世界背景、规则等..."></textarea>
+                                </div>
+                                <div class="settings-group">
+                                    <label for="style-setting"><i class="fas fa-paint-brush"></i> 风格设置</label>
+                                    <textarea id="style-setting" placeholder="描述期望的游戏风格、语言风格等..."></textarea>
+                                </div>
+                                <button id="apply-settings-btn" class="btn btn-primary">应用设置</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Chat Interface -->
+                        <div class="chat-window">
+                            <div class="chat-header">
+                                <h2><i class="fas fa-gamepad"></i> 文字游戏</h2>
+                                <div class="chat-actions">
+                                    <button id="return-home-btn" class="btn-icon" title="返回首页"><i class="fas fa-home"></i></button>
+                                    <button id="export-chat-btn" class="btn-icon" title="导出聊天记录"><i class="fas fa-download"></i></button>
+                                    <button id="import-chat-btn" class="btn-icon" title="导入聊天记录"><i class="fas fa-upload"></i></button>
+                                    <!-- Hidden file input for import -->
+                                    <input type="file" id="import-chat-file-input" accept=".json" style="display: none;">
+                                </div>
+                            </div>
+                            <div class="chat-messages" id="chat-messages">
+                                <div class="message ai-message">
+                                    <div class="message-content">
+                                        <p>欢迎来到文字游戏！请在设置面板中配置你的角色、世界和风格，然后开始游戏。</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="typing-indicator hidden">
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                            </div>
+                            <div class="chat-input">
+                                <textarea id="game-message-input" placeholder="输入你的消息..." rows="2"></textarea>
+                                <button id="send-message-btn" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- New Prompt Generator Area -->
+                <div id="prompt-generator-area" class="content-section hidden">
+                    <h2 class="section-title">自定义提示词</h2>
+                    <div class="prompt-generator-grid">
+                        <!-- Input Sections -->
+                        <div class="prompt-section">
+                            <label for="prompt-story-type">故事类型/题材:</label>
+                            <input type="text" id="prompt-story-type" placeholder="例如：科幻、奇幻、都市、悬疑、武侠...">
+                            <div class="tooltip-icon" title="选择故事的类型或题材，如科幻、奇幻、悬疑等">
+                                <i class="fas fa-question-circle"></i>
+                            </div>
+                        </div>
+                        <div class="prompt-section">
+                            <label for="prompt-keywords">关键词/核心主题:</label>
+                            <input type="text" id="prompt-keywords" placeholder="用逗号分隔，例如：成长, 救赎, 阴谋...">
+                            <div class="tooltip-icon" title="输入故事的核心主题关键词，用逗号分隔">
+                                <i class="fas fa-question-circle"></i>
+                            </div>
+                        </div>
+                        <div class="prompt-section prompt-section-full">
+                            <label for="prompt-plot">核心情节/故事大纲:</label>
+                            <textarea id="prompt-plot" rows="5" placeholder="输入故事的关键情节、转折点、简要大纲，或特定场景/事件要求..."></textarea>
+                            <div class="tooltip-icon" title="描述故事的主要情节或大纲">
+                                <i class="fas fa-question-circle"></i>
+                            </div>
+                        </div>
+                        <div class="prompt-section">
+                            <label for="prompt-characters">角色设定:</label>
+                            <div class="input-with-action">
+                                <textarea id="prompt-characters" rows="5" placeholder="每行一个角色，格式：姓名: 描述（性别、年龄、外貌、性格、动机、背景等）..."></textarea>
+                                <button class="action-btn" id="import-characters-btn" title=""><i class="fas fa-user-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="prompt-section">
+                            <label for="prompt-setting">世界观/背景设定:</label>
+                            <div class="input-with-action">
+                                <textarea id="prompt-setting" rows="5" placeholder="时代背景、地理环境、社会结构、文化氛围、科技/魔法体系..."></textarea>
+                                <button class="action-btn" id="import-glossary-to-prompt-btn" title="从词条库导入"><i class="fas fa-globe-asia"></i></button>
+                            </div>
+                        </div>
+                        <div class="prompt-section">
+                            <label for="prompt-style">文风/叙事风格:</label>
+                            <div class="input-with-action">
+                                <textarea id="prompt-style" rows="4" placeholder="语言风格（简洁/华丽）、叙事节奏、情感倾向、参考作家/作品..."></textarea>
+                                <button class="action-btn" id="import-style-btn" title=""><i class="fas fa-paint-brush"></i></button>
+                            </div>
+                        </div>
+                        <div class="prompt-section">
+                            <label for="prompt-audience">目标读者:</label>
+                            <input type="text" id="prompt-audience" placeholder="例如：青少年、成年男性、大众读者...">
+                            <div class="tooltip-icon" title="指定目标读者群体">
+                                <i class="fas fa-question-circle"></i>
+                            </div>
+                        </div>
+                        <div class="prompt-section">
+                            <label for="prompt-output-req">输出要求:</label>
+                            <textarea id="prompt-output-req" rows="3" placeholder="内容类型（续写/描写/对话）、字数/篇幅、特定格式..."></textarea>
+                            <div class="tooltip-icon" title="指定输出文本的格式和要求">
+                                <i class="fas fa-question-circle"></i>
+                            </div>
+                        </div>
+                        <div class="prompt-section prompt-section-full">
+                             <label for="prompt-negative">负面提示 (可选):</label>
+                             <input type="text" id="prompt-negative" placeholder="指定不希望出现的内容或风格，例如：避免过于血腥的描写、避免使用陈词滥调...">
+                            <div class="tooltip-icon" title="指定不希望在生成内容中出现的元素">
+                                <i class="fas fa-ban"></i>
+                            </div>
+                        </div>
+                        <div class="prompt-section prompt-section-full">
+                             <label for="prompt-additional">其他特殊要求 (可选):</label>
+                             <textarea id="prompt-additional" rows="2" placeholder="补充其他细节或特殊指令..."></textarea>
+                            <div class="tooltip-icon" title="添加其他任何特殊要求或说明">
+                                <i class="fas fa-question-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="prompt-generator-actions">
+                        <button id="generate-prompt-btn" class="btn btn-create"><i class="fas fa-magic"></i> 生成提示词</button>
+                        <button id="clear-prompt-form-btn" class="btn btn-create"><i class="fas fa-undo"></i> 清空表单</button>
+                    </div>
+
+                    <div id="generated-prompt-output" class="prompt-output-area hidden">
+                        <h3><i class="fas fa-lightbulb"></i> 生成的提示词:</h3>
+                        <textarea id="generated-prompt-text" rows="15" readonly></textarea>
+                        <div class="output-actions">
+                            <button id="copy-generated-prompt-btn" class="btn btn-primary"><i class="fas fa-copy"></i> 复制提示词</button>
+                            <button id="send-to-editor-btn" class="btn btn-primary"><i class="fas fa-paper-plane"></i> 发送到编辑器</button>
+                            <button id="send-to-synopsis-btn" class="btn btn-primary"><i class="fas fa-file-alt"></i> 发送简介</button>
+                            <button id="send-to-title-btn" class="btn btn-primary"><i class="fas fa-heading"></i> 发送书名</button>
+                            <button id="send-to-outline-btn" class="btn btn-primary"><i class="fas fa-list-ul"></i> 发送大纲</button>
+                            <button id="send-to-character-btn" class="btn btn-primary"><i class="fas fa-user"></i> 发送人物卡</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Prompt Generator Area -->
+
+                <!-- New Prompt Editor Area -->
+                <div id="prompt-editor-area" class="view hidden library-area">
+                    <h2 class="section-title"><i class="fas fa-edit"></i> 提示词编辑器</h2>
+                    <div class="prompt-editor-content">
+                        <div class="form-group">
+                            <label for="prompt-editor-text">编辑提示词:</label>
+                            <textarea id="prompt-editor-text" rows="20"></textarea>
+                        </div>
+                    </div>
+                    <div class="detail-actions">
+                        <button id="save-edited-prompt-btn" class="btn btn-primary"><i class="fas fa-save"></i> 保存修改</button>
+                        <button id="import-template-btn" class="btn btn-import"><i class="fas fa-file-import"></i> 导入模板</button>
+                        <button id="export-template-btn" class="btn btn-secondary"><i class="fas fa-file-export"></i> 导出模板</button>
+                        <button id="add-edited-prompt-to-novel-btn" class="btn btn-action"><i class="fas fa-paper-plane"></i> 添加到小说</button>
+                        <button id="exit-prompt-editor-btn" class="btn btn-prompt"><i class="fas fa-times"></i> 返回生成器</button>
+                    </div>
+                </div>
+                <!-- End Prompt Editor Area -->
+
+                <!-- Character Relationship Graph View -->
+                <div id="character-graph-view" class="hidden">
+                    <div class="graph-controls">
+                        <div class="file-input-container">
+                            <button id="upload-graph-file-btn" class="btn btn-primary">上传文件</button>
+                            <input type="file" id="graph-file-input" accept=".txt,.md,.json" style="display: none;">
+                            <span id="selected-file-name">未选择文件</span>
+                        </div>
+                        <div class="graph-options">
+                            <select id="graph-model-select" class="form-select">
+                                <option value="">选择模型...</option>
+                            </select>
+                            <button id="generate-character-graph-btn" class="btn btn-success">分析角色关系</button>
+                            <button id="generate-knowledge-graph-btn" class="btn btn-info">分析知识图谱</button>
+                            <button id="save-graph-btn" class="btn btn-secondary" disabled>保存图谱</button>
+                        </div>
+                    </div>
+                    <div class="graph-container">
+                        <div id="graph-visualization"></div>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    </div>
+
+    <!-- Hidden file input for template import -->
+    <input type="file" id="template-file-input" accept=".md" style="display: none;">
+    <!-- Hidden file input for glossary import -->
+    <input type="file" id="glossary-import-file-input" accept=".md" style="display: none;">
+
+    <!-- Custom API Modal Dialog -->
+    <div id="custom-api-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>自定义API设置</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="api-list">
+                    <h3>已保存的自定义API</h3>
+                    <ul id="saved-api-list">
+                        <!-- API items will be added dynamically -->
+                    </ul>
+                    <button id="add-api-config-btn" class="btn btn-primary"><i class="fas fa-plus"></i> 添加新配置</button>
+                </div>
+                
+                <div id="api-form" class="api-form hidden">
+                    <div class="form-group">
+                        <label for="api-name">API名称</label>
+                        <input type="text" id="api-name" placeholder="例如: 本地模型服务">
+                    </div>
+                    <div class="form-group">
+                        <label for="api-base-url">API基础URL</label>
+                        <input type="text" id="api-base-url" placeholder="例如: http://127.0.0.1:1234">
+                    </div>
+                    <div class="form-group">
+                        <label for="api-path">API路径</label>
+                        <input type="text" id="api-path" placeholder="如不需要路径可留空">
+                    </div>
+                    <div class="form-group">
+                        <label for="api-secret">API密钥(可选)</label>
+                        <input type="password" id="api-secret" placeholder="如果不需要密钥可留空">
+                    </div>
+                    <div class="form-group">
+                        <label for="api-model-name">模型名称</label>
+                        <input type="text" id="api-model-name" placeholder="例如: llama3:instruct">
+                    </div>
+                    <div class="form-actions">
+                        <button id="cancel-api-btn" class="btn btn-secondary">返回</button>
+                        <button id="save-api-btn" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/novel-types.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/api-keys.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/right-sidebar.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/chapter-manager.js') }}"></script>
+     <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

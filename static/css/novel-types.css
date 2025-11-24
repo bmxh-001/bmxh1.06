@@ -1,0 +1,132 @@
+/* Novel Type Selection Styles */
+.novel-types-container {
+  margin: 15px 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Toolbox integration */
+.toolbox-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Make sure the generate button is below the selections */
+#toolbox-generate-btn {
+  margin-top: 10px;
+  align-self: flex-start;
+}
+
+.novel-types-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+  display: flex;
+  align-items: center;
+}
+
+.novel-types-title i {
+  margin-right: 5px;
+  color: #4a90e2;
+}
+
+.novel-types-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.novel-type-option {
+  background-color: #e9e9e9;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.novel-type-option:hover {
+  background-color: #e0e0e0;
+}
+
+.novel-type-option.selected {
+  background-color: #4a90e2;
+  color: white;
+  border-color: #3a80d2;
+}
+
+.novel-subtypes-container {
+  margin-top: 5px;
+  padding-left: 15px;
+  border-left: 2px solid #e0e0e0;
+  display: none;
+}
+
+.novel-subtypes-container.visible {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+.novel-subtype-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 10px 0 5px 0;
+  color: #555;
+}
+
+.novel-subtype-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.novel-subtype-option {
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.novel-subtype-option:hover {
+  background-color: #e5e5e5;
+}
+
+.novel-subtype-option.selected {
+  background-color: #65a6e8;
+  color: white;
+  border-color: #5596d8;
+}
+
+.subtype-divider {
+  margin: 12px 0;
+  border: none;
+  border-top: 1px dashed #ccc;
+  width: 100%;
+}
+
+.selected-types-summary {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+  font-style: italic;
+  padding: 5px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+} 

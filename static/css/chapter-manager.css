@@ -1,0 +1,531 @@
+/* Chapter Manager Styles */
+
+.chapter-manager {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color, #e0e0e0);
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    color: #000000;
+}
+
+.chapter-manager h3 {
+    font-size: 1rem;
+    margin: 0 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color, #f0f0f0);
+    color: #000000;
+}
+
+.chapter-manager-title {
+    display: flex;
+    align-items: center;
+}
+
+.chapter-manager-title i {
+    margin-right: 8px;
+    color: var(--accent-color, #6699cc); /* Lighter blue */
+    transition: transform 0.3s ease;
+}
+
+.chapter-manager:hover .chapter-manager-title i {
+    transform: rotate(5deg) scale(1.1);
+}
+
+.chapter-manager-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.chapter-btn {
+    background: linear-gradient(to bottom, var(--btn-gradient-start, #f8f8f8), var(--btn-gradient-end, #eeeeee));
+    color: var(--text-color, #555);
+    border: 1px solid var(--border-color, #d0d0d0);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex: 1;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.chapter-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.chapter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(to bottom, var(--btn-hover-gradient-start, #f0f0f0), var(--btn-hover-gradient-end, #e5e5e5));
+}
+
+.chapter-btn:hover::before {
+    opacity: 1;
+}
+
+.chapter-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.chapter-btn i {
+    margin-right: 6px;
+    font-size: 0.9rem;
+    transition: transform 0.3s ease;
+}
+
+.chapter-btn:hover i {
+    transform: scale(1.2) rotate(5deg);
+}
+
+/* Custom styles for New Chapter button */
+.new-chapter-btn {
+    background: linear-gradient(to bottom, #a8dadc, #457b9d);
+    color: #ffffff;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.new-chapter-btn:hover {
+    background: linear-gradient(to bottom, #457b9d, #1d3557);
+}
+
+/* Custom styles for Sort Chapters button */
+.sort-chapters-btn {
+    background: linear-gradient(to bottom, #f1faee, #a8dadc);
+    color: #1d3557;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);
+}
+
+.sort-chapters-btn:hover {
+    background: linear-gradient(to bottom, #a8dadc, #457b9d);
+}
+
+.chapter-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color, #e0e0e0);
+    border-radius: 8px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
+    background-color: var(--list-bg, #ffffff);
+}
+
+.chapter-list-empty {
+    padding: 15px;
+    text-align: center;
+    color: var(--text-muted, #888);
+    font-style: italic;
+    background-color: #f0f0f0; /* 浅灰色 */
+}
+
+.chapter-item {
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--border-color, #f0f0f0);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(to right, transparent, transparent);
+    position: relative;
+    overflow: hidden;
+}
+
+.chapter-item:last-child {
+    border-bottom: none;
+}
+
+.chapter-item:hover {
+    background: linear-gradient(to right, rgba(240, 240, 240, 0.8), rgba(224, 224, 224, 0.8));
+    transform: translateX(2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.chapter-item.active {
+    background: linear-gradient(to right, rgba(33, 150, 243, 0.1), rgba(187, 222, 251, 0.2));
+    font-weight: 500;
+    border-left: 3px solid #2196f3;
+    box-shadow: 0 2px 8px rgba(33, 150, 243, 0.15);
+    transform: translateX(2px);
+}
+
+.chapter-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: linear-gradient(to bottom, #2196f3, #64b5f6);
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.chapter-title {
+    flex-grow: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+    padding-left: 8px;
+}
+
+.chapter-item.active .chapter-title {
+    color: #1976d2;
+}
+
+.chapter-actions {
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(10px);
+}
+
+.chapter-item:hover .chapter-actions,
+.chapter-item.active .chapter-actions {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Different background colors for chapter items based on index */
+.chapter-item-color-0 {
+    background-color: #e0f7fa; /* Light Cyan */
+}
+
+.chapter-item-color-1 {
+    background-color: #e8f5e9; /* Light Green */
+}
+
+.chapter-item-color-2 {
+    background-color: #fff3e0; /* Light Orange */
+}
+
+.chapter-item-color-3 {
+    background-color: #ede7f6; /* Light Purple */
+}
+
+.chapter-item-color-4 {
+    background-color: #ffebee; /* Light Red */
+}
+
+/* Ensure hover and active styles override the base color */
+.chapter-item:hover,
+.chapter-item.active {
+    background: linear-gradient(to right, #f0f0f0, #e0e0e0); /* 浅灰色渐变 */
+    transform: translateX(1px);
+    color: #1a1a1a; /* 可选：改变文字颜色 */
+}
+
+.chapter-item.active {
+    background: linear-gradient(to right, #e3f2fd, #bbdefb); /* 浅蓝色渐变 */
+    font-weight: 500;
+    border-left: 3px solid #2196f3; /* 蓝色边框 */
+}
+
+.chapter-action-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted, #888);
+    cursor: pointer;
+    padding: 4px;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chapter-action-btn:hover {
+    color: var(--text-color, #555);
+    background-color: rgba(0, 0, 0, 0.03);
+    transform: scale(1.05);
+}
+
+.chapter-action-btn.delete:hover {
+    color: var(--danger-color, #ff6666); /* Lighter red */
+    background-color: rgba(255, 102, 102, 0.1);
+}
+
+/* Input for chapter title editing */
+.chapter-edit-input {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid var(--primary-color, #6699cc); /* Lighter blue */
+    border-radius: 4px;
+    font-size: 0.9rem;
+    box-shadow: 0 0 0 2px rgba(102, 153, 204, 0.1);
+    transition: all 0.3s ease;
+}
+
+.chapter-edit-input:focus {
+    box-shadow: 0 0 0 2px rgba(102, 153, 204, 0.2);
+}
+
+/* Drag and drop styling */
+.chapter-item.dragging {
+    opacity: 0.7;
+    background-color: var(--drag-bg, #eef7ff);
+    border: 1px dashed var(--primary-color, #6699cc); /* Lighter blue */
+    box-shadow: 0 0 8px rgba(102, 153, 204, 0.2);
+    transform: scale(1.01);
+}
+
+.chapter-item.drag-over {
+    border-top: 2px solid var(--primary-color, #6699cc); /* Lighter blue */
+    box-shadow: 0 -2px 5px rgba(102, 153, 204, 0.15);
+}
+
+/* Empty state for chapter list */
+.no-chapters {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted, #888);
+    font-style: italic;
+}
+
+/* Confirmation dialog */
+.chapter-confirm-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--dialog-bg, #ffffff);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 320px;
+    text-align: center;
+}
+
+.chapter-confirm-dialog-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 999;
+    backdrop-filter: blur(1px);
+}
+
+.chapter-confirm-dialog-title {
+    font-weight: bold;
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+    color: var(--heading-color, #555);
+}
+
+.chapter-confirm-dialog-message {
+    margin-bottom: 20px;
+    color: var(--text-color, #555);
+}
+
+.chapter-confirm-dialog-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.chapter-confirm-dialog button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.chapter-confirm-dialog button.confirm {
+    background-color: var(--danger-color, #ff6666); /* Lighter red */
+    color: white;
+}
+
+.chapter-confirm-dialog button.confirm:hover {
+    background-color: var(--danger-hover, #ff8888); /* Even lighter red */
+    transform: translateY(-1px);
+    box-shadow: 0 1px 4px rgba(255, 102, 102, 0.4);
+}
+
+.chapter-confirm-dialog button.cancel {
+    background-color: var(--btn-bg, #eeeeee);
+    color: var(--text-color, #555);
+}
+
+.chapter-confirm-dialog button.cancel:hover {
+    background-color: var(--btn-hover-bg, #e0e0e0);
+    transform: translateY(-1px);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .chapter-manager {
+        --section-bg: #1e2040;
+        --heading-color: #e8eaff;
+        --border-color: #3d4280;
+        --btn-gradient-start: #2d3250;
+        --btn-gradient-end: #252a45;
+        --btn-hover-gradient-start: #343b5c;
+        --btn-hover-gradient-end: #2a3050;
+        --btn-bg: #2d3250;
+        --btn-hover-bg: #343b5c;
+        --text-color: #e0e4ff;
+        --text-muted: #a0a8dd;
+        --item-hover-gradient-start: #323760;
+        --item-hover-gradient-end: #293052;
+        --item-active-gradient-start: #3a4280;
+        --item-active-gradient-end: #2d3566;
+        --list-bg: #1a1d38;
+        --primary-color: #7a85ff;
+        --accent-color: #5e7aee;
+        --danger-color: #ff7890;
+        --danger-hover: #ff5a77;
+        --dialog-bg: #252a45;
+        --drag-bg: #2a3255;
+    }
+}
+
+/* Notes Manager Styles */
+.notes-manager {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 15px;
+    padding: 15px;
+}
+
+.notes-manager-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #333;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.notes-manager-title i {
+    color: #2196f3;
+}
+
+.notes-manager-buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.notes-btn {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: 0 2px 8px rgba(80,120,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    transition: box-shadow 0.2s, transform 0.2s;
+    position: relative;
+}
+
+.notes-btn .notes-btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+}
+
+.notes-btn svg {
+    width: 32px;
+    height: 32px;
+    display: block;
+    filter: drop-shadow(0 2px 6px rgba(80,120,255,0.10));
+}
+
+.notes-btn:hover {
+    box-shadow: 0 4px 16px 0 rgba(80,120,255,0.18), 0 0 0 4px rgba(80,200,255,0.10);
+    transform: translateY(-2px) scale(1.08);
+    z-index: 2;
+}
+
+.notes-btn:active {
+    transform: scale(0.97);
+}
+
+.notes-btn .notes-btn-icon svg circle {
+    stroke: #fff;
+    stroke-width: 1.5;
+    filter: blur(0.2px);
+}
+
+.notes-btn .notes-btn-icon svg path,
+.notes-btn .notes-btn-icon svg rect {
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.10));
+}
+
+.notes-editor-container {
+    position: relative;
+    margin-top: 10px;
+}
+
+.notes-editor {
+    width: 100%;
+    min-height: 150px;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    resize: vertical;
+    font-family: inherit;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #333;
+    background: #fafafa;
+    transition: all 0.3s ease;
+}
+
+.notes-editor:focus {
+    outline: none;
+    border-color: #2196f3;
+    background: #fff;
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+}
+
+.notes-editor::placeholder {
+    color: #999;
+}

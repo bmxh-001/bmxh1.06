@@ -1,0 +1,27 @@
+{
+  "1890a85b-af29-47e0-bfd4-22e491362525": {
+    "name": "墨衡",
+    "description": "英俊潇洒，身法敏捷，擅长暗器",
+    "details": {}
+  },
+  "d94688b6-bd69-4dac-aa98-0474fcb0c95b": {
+    "name": "主角A",
+    "description": "男，家境贫寒，样貌英俊，一表人才，性格沉着冷静，机智，处事果断。深得总裁女儿喜爱。",
+    "details": {}
+  },
+  "18ae92ba-c599-4c79-a98a-bcc0fe3bd201": {
+    "name": "主角B",
+    "description": "男，集团公司总经理，喜欢总裁女儿，处处刁难主角A",
+    "details": {}
+  },
+  "975cf2b5-967e-4e44-a38d-64d7c0893fcb": {
+    "name": "主角C",
+    "description": "总裁女儿，被主角A的奋斗精神感动，并爱上了主角A，对主角B的种种行为感到厌恶。",
+    "details": {}
+  },
+  "ba838454-e5d6-488b-be17-78e7be91c9ae": {
+    "name": "配角A",
+    "description": "部门前台礼仪，女，性格八卦，经常散布小道消息。",
+    "details": {}
+  }
+}

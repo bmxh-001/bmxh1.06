@@ -1,0 +1,388 @@
+/* static/css/night-mode.css */
+
+body.night-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+/* General elements in night mode */
+.night-mode .app-header,
+.night-mode .sidebar,
+.night-mode .content-area,
+.night-mode .modal-content {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border-color: #333;
+}
+
+.night-mode h1,
+.night-mode h2,
+.night-mode h3,
+.night-mode h4,
+.night-mode h5,
+.night-mode h6 {
+    color: #f5f5f5;
+}
+
+.night-mode .sidebar-section h2 i {
+    color: #bb86fc; /* A Material Design dark theme accent color */
+}
+
+.night-mode .btn {
+    background-color: #333;
+    color: #e0e0e0;
+    border: 1px solid #555;
+}
+
+.night-mode .btn:hover {
+    background-color: #444;
+}
+
+.night-mode .btn-create,
+.night-mode .btn-primary {
+    background-color: #03dac6; /* Material Design primary color for dark theme */
+    color: #121212;
+}
+.night-mode .btn-create:hover,
+.night-mode .btn-primary:hover {
+    background-color: #018786;
+}
+
+.night-mode .btn-secondary {
+    background-color: #555;
+    color: #e0e0e0;
+}
+.night-mode .btn-secondary:hover {
+    background-color: #666;
+}
+
+.night-mode .btn-danger {
+    background-color: #cf6679; /* Material Design error color for dark theme */
+    color: #121212;
+}
+.night-mode .btn-danger:hover {
+    background-color: #b00020;
+}
+
+.night-mode input[type="text"],
+.night-mode input[type="password"],
+.night-mode textarea,
+.night-mode select {
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+    border: 1px solid #444;
+}
+
+.night-mode input[type="text"]::placeholder,
+.night-mode textarea::placeholder {
+    color: #888;
+}
+
+.night-mode .view {
+    background-color: #1e1e1e;
+    border-left: 1px solid #333;
+}
+
+.night-mode #writing-area,
+.night-mode #toolbox-area,
+.night-mode #character-library-area,
+.night-mode #glossary-area,
+.night-mode #style-area,
+.night-mode #game-chat-area,
+.night-mode #prompt-generator-area,
+.night-mode #prompt-editor-area {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+.night-mode .writing-title-bar,
+.night-mode .collapsible-toggle-bar {
+    background-color: #2a2a2a;
+    border-bottom: 1px solid #333;
+}
+
+.night-mode #collapsible-writing-settings {
+    background-color: #252525;
+    border-bottom: 1px solid #333;
+}
+
+.night-mode .metadata-group label {
+    color: #bbb;
+}
+
+.night-mode .output-area,
+.night-mode .prompt-output-area {
+    background-color: #2c2c2c;
+    border: 1px solid #444;
+}
+
+.night-mode pre code {
+    background-color: #252525;
+    color: #d0d0d0;
+    border: 1px solid #404040;
+}
+
+.night-mode .list-panel,
+.night-mode .detail-panel {
+    background-color: #252525;
+    border-color: #333;
+}
+
+.night-mode .library-list li {
+    background-color: #2c2c2c;
+    border-bottom: 1px solid #383838;
+}
+
+.night-mode .library-list li:hover {
+    background-color: #383838;
+}
+
+.night-mode .detail-content,
+.night-mode .form-content {
+    background-color: #2c2c2c;
+    border-color: #333;
+}
+
+.night-mode .form-group label {
+    color: #bbb;
+}
+
+.night-mode .modal-header,
+.night-mode .modal-body {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    border-color: #333;
+}
+
+.night-mode .close-modal {
+    color: #aaa;
+}
+.night-mode .close-modal:hover {
+    color: #fff;
+}
+
+.night-mode .api-list ul li {
+    background-color: #333;
+    border: 1px solid #444;
+}
+
+.night-mode .api-list ul li:hover {
+    background-color: #404040;
+}
+
+.night-mode .api-status-container .status.connected {
+    color: #4caf50; /* Green for connected */
+}
+
+.night-mode .api-status-container .status.disconnected {
+    color: #f44336; /* Red for disconnected */
+}
+
+.night-mode .api-status-container .status.pending {
+    color: #ffeb3b; /* Yellow for pending */
+}
+
+.night-mode .welcome-content {
+    background-color: #1e1e1e;
+}
+
+.night-mode .welcome-info .info-section {
+    background-color: #252525;
+    border: 1px solid #333;
+}
+
+.night-mode .welcome-tools li button {
+    background-color: #333;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+.night-mode .welcome-tools li button:hover {
+    background-color: #444;
+}
+
+.night-mode .scrolling-notice marquee {
+    color: #b0b0b0;
+}
+
+/* Toggle Switch Styles specific for night mode adjustments if needed */
+.night-mode .switch input:checked + .slider {
+    background-color: #03dac6; /* Accent color for toggle */
+}
+
+.night-mode .slider.round {
+    background-color: #555; /* Off state for toggle in night mode */
+}
+
+.night-mode .header-actions .night-mode-label {
+    color: #e0e0e0;
+}
+
+.night-mode .novel-types-container {
+    background-color: #252525;
+    border: 1px solid #333;
+}
+
+.night-mode .novel-types-title {
+    color: #f0f0f0;
+}
+
+.night-mode .novel-types-options .type-button,
+.night-mode .novel-subtype-options .subtype-button {
+    background-color: #333;
+    color: #e0e0e0;
+    border: 1px solid #444;
+}
+
+.night-mode .novel-types-options .type-button.selected,
+.night-mode .novel-subtype-options .subtype-button.selected {
+    background-color: #03dac6;
+    color: #121212;
+    border-color: #03dac6;
+}
+
+.night-mode .selected-types-summary {
+    background-color: #2c2c2c;
+    border: 1px solid #444;
+    color: #d0d0d0;
+}
+
+.night-mode .tooltip-icon {
+    color: #aaa;
+}
+
+/* Game Chat Area */
+.night-mode .game-settings-panel .settings-header,
+.night-mode .chat-window .chat-header {
+    background-color: #2a2a2a;
+    border-bottom: 1px solid #333;
+}
+
+.night-mode .game-settings-panel .settings-content {
+    background-color: #252525;
+}
+
+.night-mode .chat-messages {
+    background-color: #1e1e1e;
+}
+
+.night-mode .message.user-message .message-content {
+    background-color: #037cfc; /* Brighter blue for user messages */
+    color: #fff;
+}
+
+.night-mode .message.ai-message .message-content {
+    background-color: #3a3a3a;
+    color: #e0e0e0;
+}
+
+.night-mode .chat-input {
+    background-color: #2a2a2a;
+    border-top: 1px solid #333;
+}
+
+/* Ensure a few more specific elements are covered */
+.night-mode .sidebar-section ul li {
+    color: #d0d0d0;
+}
+.night-mode .sidebar-section ul li:hover {
+    background-color: #303030;
+}
+
+.night-mode .tool-btn,
+.night-mode .btn-icon {
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+.night-mode .tool-btn:hover,
+.night-mode .btn-icon:hover {
+    background-color: #444;
+}
+
+.night-mode .prompt-section label {
+    color: #bbb;
+}
+
+.night-mode .input-with-action .action-btn {
+    background-color: #444;
+    color: #e0e0e0;
+    border: 1px solid #555;
+}
+.night-mode .input-with-action .action-btn:hover {
+    background-color: #555;
+}
+
+/* Header action toggle specific styles */
+.header-actions {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Pushes it to the right if header is flex */
+    padding-right: 20px; /* Add some padding */
+}
+
+.header-actions .night-mode-label {
+    margin-left: 8px;
+    font-size: 0.9em;
+    color: #333; /* Default color, will be overridden by .night-mode */
+}
+
+/* Basic Toggle Switch CSS (can be in style.css or night-mode.css) */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px; /* Smaller width */
+    height: 24px; /* Smaller height */
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px; /* Smaller handle */
+    width: 18px;  /* Smaller handle */
+    left: 3px;    /* Adjusted position */
+    bottom: 3px;  /* Adjusted position */
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 24px; /* Adjusted for height */
+}
+
+.slider.round:before {
+    border-radius: 50%;
+} 

@@ -1,0 +1,317 @@
+/* Enhanced Button Styling for Export Buttons */
+.writing-toolbar {
+    display: flex;
+    padding: 10px 15px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.writing-toolbar button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    background: white;
+    border: 1px solid #d1d5db;
+    color: #4b5563;
+    min-width: 120px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.writing-toolbar button:hover {
+    background: #f3f4f6;
+    border-color: #9ca3af;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.writing-toolbar button:active {
+    background: #e5e7eb;
+    transform: translateY(1px);
+}
+
+.writing-toolbar button i {
+    margin-right: 8px;
+    font-size: 1em;
+}
+
+/* Group styling */
+.writing-toolbar button#save-novel-btn {
+    background: #4f46e5;
+    color: white;
+    border-color: #4338ca;
+}
+
+.writing-toolbar button#save-novel-btn:hover {
+    background: #4338ca;
+}
+
+/* Export button group */
+.writing-toolbar .export-group {
+    display: flex;
+    gap: 6px;
+    margin-left: auto;
+    flex-wrap: wrap;
+}
+
+/* Export button styling variations */
+.writing-toolbar button#export-txt-btn {
+    background: #f0fdf4;
+    border-color: #86efac;
+    color: #166534;
+}
+
+.writing-toolbar button#export-txt-btn:hover {
+    background: #dcfce7;
+    border-color: #4ade80;
+}
+
+.writing-toolbar button#export-json-btn {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    color: #1e40af;
+}
+
+.writing-toolbar button#export-json-btn:hover {
+    background: #dbeafe;
+    border-color: #60a5fa;
+}
+
+.writing-toolbar button#export-docx-btn {
+    background: #f0f9ff;
+    border-color: #93c5fd;
+    color: #0369a1;
+}
+
+.writing-toolbar button#export-docx-btn:hover {
+    background: #e0f2fe;
+    border-color: #38bdf8;
+}
+
+/* Match save-to-glossary button to export button style */
+.writing-toolbar button#save-to-glossary-btn {
+    background: #f0fdf4;
+    border-color: #86efac;
+    color: #166534;
+}
+
+.writing-toolbar button#save-to-glossary-btn:hover {
+    background: #dcfce7;
+    border-color: #4ade80;
+}
+
+/* Responsive adjustments for writing toolbar */
+@media (max-width: 768px) {
+    .writing-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .writing-toolbar .export-group {
+        margin-left: 0;
+        justify-content: space-between;
+        margin-top: 8px;
+    }
+    
+    .writing-toolbar button {
+        flex: 1;
+    }
+}
+
+@media (max-width: 576px) {
+    .writing-toolbar {
+        padding: 8px 10px;
+    }
+    
+    .writing-toolbar button {
+        font-size: 0.9em;
+        min-width: 100px;
+        padding: 6px 10px;
+    }
+    
+    .writing-toolbar button i {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 360px) {
+    .writing-toolbar .export-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .writing-toolbar button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Button Color Enhancements */
+
+/* 创建新小说 - Create New Novel Button - Blue */
+#new-novel-btn, #welcome-new-novel-btn {
+    background-color: #4299e1;
+    border: 1px solid #3182ce;
+    color: white;
+}
+#new-novel-btn:hover, #welcome-new-novel-btn:hover {
+    background-color: #3182ce;
+}
+
+/* 导入小说 - Import Novel Button - Purple */
+#import-novel-btn, #welcome-import-btn {
+    background-color: #805ad5;
+    border: 1px solid #6b46c1;
+    color: white;
+}
+#import-novel-btn:hover, #welcome-import-btn:hover {
+    background-color: #6b46c1;
+}
+
+/* 自定义提示词 - Custom Prompts Button - Green */
+#smart-prompt-btn {
+    background-color: #38a169;
+    border: 1px solid #2f855a;
+    color: white;
+}
+#smart-prompt-btn:hover {
+    background-color: #2f855a;
+}
+
+/* 提示词编辑器 - Prompt Editor Button - Orange */
+#prompt-editor-btn {
+    background-color: #ed8936;
+    border: 1px solid #dd6b20;
+    color: white;
+}
+#prompt-editor-btn:hover {
+    background-color: #dd6b20;
+}
+
+/* AIGC降重 - AIGC Weight Reduction Button - Red */
+#rewrite-novel-btn {
+    background-color: #e53e3e;
+    border: 1px solid #c53030;
+    color: white;
+}
+#rewrite-novel-btn:hover {
+    background-color: #c53030;
+}
+
+/* Style the library buttons with different colors */
+#open-character-library-btn {
+    background: #f0fdf4;
+    border-color: #86efac;
+    color: #166534;
+}
+#open-character-library-btn:hover {
+    background: #dcfce7;
+    border-color: #4ade80;
+}
+
+#open-glossary-btn {
+    background: #f0fdf4;
+    border-color: #86efac;
+    color: #166534;
+}
+#open-glossary-btn:hover {
+    background: #dcfce7;
+    border-color: #4ade80;
+}
+
+#open-style-library-btn {
+    background: #f0fdf4;
+    border-color: #86efac;
+    color: #166534;
+}
+#open-style-library-btn:hover {
+    background: #dcfce7;
+    border-color: #4ade80;
+}
+
+/* Tool buttons with unique colors */
+.tool-btn[data-tool="synopsis"] {
+    background-color: #9f7aea;
+    color: white;
+}
+.tool-btn[data-tool="synopsis"]:hover {
+    background-color: #805ad5;
+}
+
+.tool-btn[data-tool="title"] {
+    background-color: #38b2ac;
+    color: white;
+}
+.tool-btn[data-tool="title"]:hover {
+    background-color: #319795;
+}
+
+.tool-btn[data-tool="outline"] {
+    background-color: #4299e1;
+    color: white;
+}
+.tool-btn[data-tool="outline"]:hover {
+    background-color: #3182ce;
+}
+
+.tool-btn[data-tool="detailed-outline"] {
+    background-color: #f687b3;
+    color: white;
+}
+.tool-btn[data-tool="detailed-outline"]:hover {
+    background-color: #d53f8c;
+}
+
+.tool-btn[data-tool="character"] {
+    background-color: #48bb78;
+    color: white;
+}
+.tool-btn[data-tool="character"]:hover {
+    background-color: #38a169;
+}
+
+.tool-btn[data-tool="text-game"] {
+    background-color: #f6ad55;
+    color: white;
+}
+.tool-btn[data-tool="text-game"]:hover {
+    background-color: #ed8936;
+}
+
+/* Make sure button icons stand out */
+.btn i, .tool-btn i {
+    color: rgba(255, 255, 255, 0.9);
+    margin-right: 6px;
+}
+
+/* Icon styling for export buttons and library buttons */
+.writing-toolbar button#export-txt-btn i,
+.writing-toolbar button#export-json-btn i,
+.writing-toolbar button#export-docx-btn i,
+.writing-toolbar button#save-to-glossary-btn i {
+    color: inherit;
+}
+
+#open-character-library-btn i,
+#open-glossary-btn i,
+#open-style-library-btn i {
+    color: inherit;
+    margin-right: 6px;
+}
+
+/* Improved button styling */
+.btn, .tool-btn {
+    transition: all 0.2s ease;
+    font-weight: 500;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn:hover, .tool-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+} 

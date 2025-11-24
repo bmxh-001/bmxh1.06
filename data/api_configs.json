@@ -1,0 +1,66 @@
+{
+  "9cda1dda-25d1-492c-9276-63104cf10d64": {
+    "id": "9cda1dda-25d1-492c-9276-63104cf10d64",
+    "name": "open router",
+    "baseUrl": "https://openrouter.ai/api/v1",
+    "path": "/chat/completions",
+    "secret": "",
+    "modelName": "deepseek/deepseek-r1:free"
+  },
+  "a2e8fd80-cebf-43c5-9b49-f3ea6708ebad": {
+    "id": "a2e8fd80-cebf-43c5-9b49-f3ea6708ebad",
+    "name": "ollama",
+    "baseUrl": "http://127.0.0.1:11454",
+    "path": "/v1/chat/completions",
+    "secret": "",
+    "modelName": "gemma3:12b"
+  },
+  "e0cc9022-bb2a-4dca-9be1-8d90b850d150": {
+    "id": "e0cc9022-bb2a-4dca-9be1-8d90b850d150",
+    "name": "GEMINI2.0",
+    "baseUrl": "https://generativelanguage.googleapis.com/v1beta/openai/",
+    "path": "chat/completions",
+    "secret": "AIzaSyBDnEO7Mb9t6ZEKLMuYxDOK4IBamGTEDXw",
+    "modelName": "gemini-2.0-flash"
+  },
+  "b7fe2e3e-c475-49fd-807d-95671e1c3b8a": {
+    "id": "b7fe2e3e-c475-49fd-807d-95671e1c3b8a",
+    "name": "智谱API",
+    "baseUrl": "https://open.bigmodel.cn/api/paas/v4/chat/completions",
+    "path": "",
+    "secret": "9fa183e3114645b782e96a535c98fc34.lIhK3GyUooeHZdFq",
+    "modelName": "GLM-4-Flash-250414"
+  },
+  "510c1f48-0b56-4915-a074-f8bbe97a7298": {
+    "id": "510c1f48-0b56-4915-a074-f8bbe97a7298",
+    "name": "测试",
+    "baseUrl": "https://tbnx.plus7.plus/v1",
+    "path": "/chat/completions",
+    "secret": "sk-ioc2800SBbHzWD2y0OB0isUBLXz4cBT9ZnV90U4uXedNNbid",
+    "modelName": "deepseek-chat"
+  },
+  "3a89af5e-9a80-4606-84f5-fa75a0aef095": {
+    "id": "3a89af5e-9a80-4606-84f5-fa75a0aef095",
+    "name": "ollama",
+    "baseUrl": "http://127.0.0.1:11454",
+    "path": "/v1/chat/completions",
+    "secret": "",
+    "modelName": "Qwen2.5-1m_gpu256:latest"
+  },
+  "776d6d47-7756-4886-9905-b8a3d986b85f": {
+    "id": "776d6d47-7756-4886-9905-b8a3d986b85f",
+    "name": "LM STUDIO",
+    "baseUrl": "http://127.0.0.1:1234",
+    "path": "/v1/chat/completions",
+    "secret": "",
+    "modelName": "huihui-ai.qwen2.5-7b-instruct-1m-abliterated"
+  },
+  "e3aa0fd9-f4f5-4756-84bf-579c86f1c6da": {
+    "id": "e3aa0fd9-f4f5-4756-84bf-579c86f1c6da",
+    "name": "MOTA",
+    "baseUrl": "https://api-inference.modelscope.cn/v1",
+    "path": "chat/completions",
+    "secret": "d4076660-2d90-497e-9c1a-971075129839",
+    "modelName": "deepseek-ai/DeepSeek-R1-0528"
+  }
+}
