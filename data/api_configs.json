@@ -20,7 +20,7 @@
     "name": "GEMINI2.0",
     "baseUrl": "https://generativelanguage.googleapis.com/v1beta/openai/",
     "path": "chat/completions",
-    "secret": "AIzaSyBDnEO7Mb9t6ZEKLMuYxDOK4IBamGTEDXw",
+    "secret": "",
     "modelName": "gemini-2.0-flash"
   },
   "b7fe2e3e-c475-49fd-807d-95671e1c3b8a": {
@@ -28,7 +28,7 @@
     "name": "智谱API",
     "baseUrl": "https://open.bigmodel.cn/api/paas/v4/chat/completions",
     "path": "",
-    "secret": "9fa183e3114645b782e96a535c98fc34.lIhK3GyUooeHZdFq",
+    "secret": "",
     "modelName": "GLM-4-Flash-250414"
   },
   "510c1f48-0b56-4915-a074-f8bbe97a7298": {
@@ -36,7 +36,7 @@
     "name": "测试",
     "baseUrl": "https://tbnx.plus7.plus/v1",
     "path": "/chat/completions",
-    "secret": "sk-ioc2800SBbHzWD2y0OB0isUBLXz4cBT9ZnV90U4uXedNNbid",
+    "secret": "",
     "modelName": "deepseek-chat"
   },
   "3a89af5e-9a80-4606-84f5-fa75a0aef095": {
@@ -60,7 +60,8 @@
     "name": "MOTA",
     "baseUrl": "https://api-inference.modelscope.cn/v1",
     "path": "chat/completions",
-    "secret": "d4076660-2d90-497e-9c1a-971075129839",
+    "secret": "",
     "modelName": "deepseek-ai/DeepSeek-R1-0528"
   }
+
 }
